@@ -1,0 +1,7 @@
+{
+  "name": "ci-template",
+  "description": "CI Template Test Module",
+  "version": "0.1.0",
+  "dependencies": {},
+  "devDependencies": {}
+}
