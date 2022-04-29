@@ -48,9 +48,11 @@ jobs:
         uses: dawidd6/action-get-tag@v1
       - name: Get Previous tag
         id: previoustag # output: tag
-        uses: WyriHaximus/github-action-get-previous-tag@v1
-        with:
-          fallback: "notfound" # Optional fallback tag to use when no tag can be found
+        run: |
+          lastTag=$(gh release view --json tagName --jq .tagName)
+          echo "::set-output name=tag::${lastTag}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
       ### XXX: Auto update submodule ref, enable this if needed
       - name: Update submodules
@@ -168,7 +170,7 @@ jobs:
           commit: ${{ github.sha }}
           #prerelease: true
           allowUpdates: true
-          
+
           # XXX: edit this to false & true if you want to preserve original artifact
           removeArtifacts: true
           replacesArtifacts: false
